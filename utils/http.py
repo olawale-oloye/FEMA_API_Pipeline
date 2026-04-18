@@ -5,17 +5,18 @@ Provides a reusable GET request function with retry
 and exponential backoff handling.
 """
 
-import requests
 import time
-from conf.settings import API_MAX_RETRIES, API_BACKOFF_FACTOR
+
+import requests
+
 from conf.conf import get_logger
-from typing import Optional
+from conf.settings import API_BACKOFF_FACTOR, API_MAX_RETRIES
 
 logger = get_logger(__name__)
 
 
 def get_request(
-    url: str, params: Optional[dict] = None, timeout: float = 10.0
+    url: str, params: dict[str, int] | None = None, timeout: float = 10.0
 ) -> requests.Response:
     """
     Perform an HTTP GET request with retry logic.

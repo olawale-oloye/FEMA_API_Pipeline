@@ -24,7 +24,7 @@ repos:
 
   - id: ruff
     name: ruff
-    entry: python -m ruff check .
+    entry: python -m ruff check . --fix
     language: system
     types: [python]
 

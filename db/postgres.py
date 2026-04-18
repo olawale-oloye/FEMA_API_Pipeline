@@ -4,13 +4,15 @@ PostgreSQL connection and database setup module.
 
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-from conf.settings import PG_HOST, PG_PORT, PG_DB, PG_USER, PG_PASSWORD
+from psycopg2.extensions import connection as Connection
+
 from conf.conf import get_logger
+from conf.settings import PG_DB, PG_HOST, PG_PASSWORD, PG_PORT, PG_USER
 
 logger = get_logger(__name__)
 
 
-def get_server_connection():
+def get_server_connection() -> Connection:
     """
     Connect to default PostgreSQL database.
 
@@ -28,7 +30,7 @@ def get_server_connection():
     )
 
 
-def get_connection():
+def get_connection() -> Connection:
     """
     Connect to target application database.
 
@@ -44,7 +46,7 @@ def get_connection():
     )
 
 
-def create_database_if_not_exists():
+def create_database_if_not_exists() -> None:
     """
     Create the application database if it does not exist.
     """

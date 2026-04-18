@@ -9,6 +9,7 @@ It should contain only configuration values and no execution logic.
 
 import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 # -----------------------------

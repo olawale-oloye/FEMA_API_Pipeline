@@ -8,7 +8,7 @@ from conf.conf import setup_logging
 from pipelines.fema_pipeline import run_pipeline
 
 
-def main():
+def main() -> None:
     """
     Main application function.
     """

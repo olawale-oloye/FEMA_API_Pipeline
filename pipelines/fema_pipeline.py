@@ -4,15 +4,17 @@ FEMA ETL pipeline.
 Orchestrates extract, transform, and load operations.
 """
 
+from conf.conf import get_logger
 from db.postgres import create_database_if_not_exists, get_connection
 from db.repositories import create_table_if_not_exists, insert_projects
 from services.fema_service import get_processed_projects
-from conf.conf import get_logger
+
+# from typing import Any
 
 logger = get_logger(__name__)
 
 
-def run_pipeline():
+def run_pipeline() -> None:
     """
     Execute the full ETL pipeline.
 
@@ -31,7 +33,9 @@ def run_pipeline():
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute("SELECT current_database();")
-    logger.info(f"Connected to DB: {cursor.fetchone()[0]}")
+    result = cursor.fetchone()
+    db_name = result[0] if result else "unknown"
+    logger.info(f"Connected to DB: {db_name}")
     cursor.close()
     conn.close()
 

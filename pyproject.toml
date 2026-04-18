@@ -1,0 +1,96 @@
+[project]
+name = "api-etl"
+version = "0.1.0"
+description = "ETL pipeline for FEMA API"
+requires-python = ">=3.10"
+
+# =========================
+
+# Ruff (lint + format)
+
+# =========================
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+# Enable common rule sets
+
+lint.select = [
+"E",   # pycodestyle errors
+"F",   # pyflakes
+"I",   # import sorting
+"B",   # bugbear
+"UP",  # pyupgrade
+]
+
+# Ignore rules you don't want
+
+lint.ignore = [
+"E501",  # line too long (handled by formatter)
+]
+
+# Auto-fix enabled (used with --fix)
+
+fix = true
+
+# Exclude common dirs
+
+exclude = [
+".git",
+"**pycache**",
+".venv",
+"build",
+"dist",
+]
+
+# =========================
+
+# Ruff formatting
+
+# =========================
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+# =========================
+
+# Mypy (type checking)
+
+# =========================
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+
+# Relax a few things for sanity
+
+ignore_missing_imports = true
+warn_unused_configs = true
+warn_return_any = true
+warn_unused_ignores = true
+
+# Good defaults
+
+disallow_untyped_defs = true
+check_untyped_defs = true
+
+# Exclude folders
+
+exclude = [
+"build/",
+"dist/",
+".venv/",
+]
+
+# =========================
+
+# Optional: tool configs
+
+# =========================
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra -q"

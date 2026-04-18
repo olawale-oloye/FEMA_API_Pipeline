@@ -5,10 +5,11 @@ Converts raw API records into a structured format
 suitable for database insertion.
 """
 
-from datetime import datetime
+from datetime import date, datetime
+from typing import Any
 
 
-def parse_date(date_str: str):
+def parse_date(date_str: str | None) -> date | None:
     """
     Safely parse ISO date string.
 
@@ -26,7 +27,7 @@ def parse_date(date_str: str):
         return None
 
 
-def transform_projects(projects: list) -> list:
+def transform_projects(projects: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """
     Transform raw FEMA records into curated schema.
 

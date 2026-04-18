@@ -2,13 +2,15 @@
 Database operations for FEMA project data.
 """
 
-from db.postgres import get_connection
+from typing import Any
+
 from conf.conf import get_logger
+from db.postgres import get_connection
 
 logger = get_logger(__name__)
 
 
-def create_table_if_not_exists():
+def create_table_if_not_exists() -> None:
     """
     Create FEMA projects table if it does not exist.
     """
@@ -38,7 +40,7 @@ def create_table_if_not_exists():
     logger.info("Table ready")
 
 
-def insert_projects(projects: list):
+def insert_projects(projects: list[dict[str, Any]]) -> None:
     """
     Insert FEMA project records into database.
 

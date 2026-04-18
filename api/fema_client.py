@@ -5,14 +5,19 @@ Responsible for retrieving data from the FEMA API
 using pagination.
 """
 
-from conf.settings import FEMA_API_BASE, FEMA_ENDPOINT, FEMA_PAGE_LIMIT, API_TIMEOUT
-from utils.http import get_request
+from collections.abc import Generator
+from typing import Any
+
 from conf.conf import get_logger
+from conf.settings import API_TIMEOUT, FEMA_API_BASE, FEMA_ENDPOINT, FEMA_PAGE_LIMIT
+from utils.http import get_request
 
 logger = get_logger(__name__)
 
 
-def fetch_all_projects(limit: int = FEMA_PAGE_LIMIT):
+def fetch_all_projects(
+    limit: int = FEMA_PAGE_LIMIT,
+) -> Generator[list[dict[str, Any]], None, None]:
     """
     Fetch FEMA project data in paginated batches.
 
