@@ -10,7 +10,26 @@ from db.postgres import get_connection
 logger = get_logger(__name__)
 
 
-def create_table_if_not_exists() -> None:
+def create_schema_if_not_exists(schema: str = "bronze") -> None:
+    """
+    Create schema if it does not exist.
+
+    Args:
+        schema: Schema name (default: bronze)
+    """
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(f"CREATE SCHEMA IF NOT EXISTS {schema};")
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    logger.info(f"Schema '{schema}' ready")
+
+
+def create_table_if_not_exists(schema: str = "bronze") -> None:
     """
     Create FEMA projects table if it does not exist.
     """
@@ -18,7 +37,7 @@ def create_table_if_not_exists() -> None:
     cursor = conn.cursor()
 
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS fema_projects (
+        CREATE TABLE IF NOT EXISTS {schema}.fema_projects (
             id SERIAL PRIMARY KEY,
             disaster_number INTEGER,
             state TEXT,
@@ -37,21 +56,22 @@ def create_table_if_not_exists() -> None:
     cursor.close()
     conn.close()
 
-    logger.info("Table ready")
+    logger.info(f"Table {schema}.fema_projects ready")
 
 
-def insert_projects(projects: list[dict[str, Any]]) -> None:
+def insert_projects(projects: list[dict[str, Any]], schema: str = "bronze") -> None:
     """
     Insert FEMA project records into database.
 
     Args:
         projects (list): Transformed project records.
+        schema: Target schema (default: bronze)
     """
     conn = get_connection()
     cursor = conn.cursor()
 
     query = """
-        INSERT INTO fema_projects (
+        INSERT INTO {schema}.fema_projects (
             disaster_number, state, county, incident_type,
             declaration_date, applicant_name, project_number,
             project_title, federal_share, total_obligated
@@ -82,4 +102,4 @@ def insert_projects(projects: list[dict[str, Any]]) -> None:
     cursor.close()
     conn.close()
 
-    logger.info(f"Inserted {inserted} rows")
+    logger.info(f"Inserted {inserted} rows into {schema}.fema_projects")
