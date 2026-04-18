@@ -1,0 +1,41 @@
+# .pre-commit-config.yaml
+# fail_fast: true
+# repos:
+#   - repo: https://github.com/psf/black
+#     rev: stable
+#     hooks:
+#       - id: black
+#   - repo: https://github.com/PyCQA/pylint
+#     rev: v3.0.0
+#     hooks:
+#       - id: pylint
+
+# pip install pre-commit
+# pre-commit install
+# pre-commit run --all-files
+
+
+fail_fast: true
+
+repos:
+
+- repo: local
+  hooks:
+
+  - id: ruff
+    name: ruff
+    entry: python -m ruff check .
+    language: system
+    types: [python]
+
+  - id: ruff-format
+    name: ruff-format
+    entry: python -m ruff format .
+    language: system
+    types: [python]
+
+  - id: mypy
+    name: mypy
+    entry: python -m mypy
+    language: system
+    types: [python]

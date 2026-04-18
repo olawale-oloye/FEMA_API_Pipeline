@@ -9,11 +9,14 @@ import requests
 import time
 from conf.settings import API_MAX_RETRIES, API_BACKOFF_FACTOR
 from conf.conf import get_logger
+from typing import Optional
 
 logger = get_logger(__name__)
 
 
-def get_request(url: str, params: dict = None, timeout: int = 10) -> requests.Response:
+def get_request(
+    url: str, params: Optional[dict] = None, timeout: float = 10.0
+) -> requests.Response:
     """
     Perform an HTTP GET request with retry logic.
 
@@ -36,7 +39,7 @@ def get_request(url: str, params: dict = None, timeout: int = 10) -> requests.Re
 
         except requests.RequestException as e:
             wait = API_BACKOFF_FACTOR * (2**attempt)
-            logger.warning(f"Attempt {attempt+1} failed: {e}")
+            logger.warning(f"Attempt {attempt + 1} failed: {e}")
             time.sleep(wait)
 
     raise RuntimeError("Max retries exceeded")

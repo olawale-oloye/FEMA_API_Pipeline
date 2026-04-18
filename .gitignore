@@ -1,1 +1,140 @@
-__pycache__
+# =========================
+
+# Python
+
+# =========================
+
+**pycache**/
+*.py[cod]
+*$py.class
+
+# C extensions
+
+*.so
+
+# Distribution / packaging
+
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Virtual environments
+
+.venv/
+venv/
+env/
+ENV/
+
+# =========================
+
+# Type checkers / linters
+
+# =========================
+
+.mypy_cache/
+.dmypy.json
+.pyre/
+.ruff_cache/
+.pytype/
+
+# =========================
+
+# Testing / coverage
+
+# =========================
+
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+
+# =========================
+
+# Logs & runtime
+
+# =========================
+
+*.log
+*.out
+*.err
+*.pid
+
+# =========================
+
+# Environment variables
+
+# =========================
+
+.env
+.env.*
+*.env
+
+# =========================
+
+# IDE / Editor
+
+# =========================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# =========================
+
+# OS files
+
+# =========================
+
+.DS_Store
+Thumbs.db
+
+# =========================
+
+# Jupyter Notebook
+
+# =========================
+
+.ipynb_checkpoints/
+
+# =========================
+
+# Docker
+
+# =========================
+
+docker-compose.override.yml
+
+# =========================
+
+# Misc
+
+# =========================
+
+*.sqlite3
+*.db
+
+# =========================
+
+# Secrets (extra safety)
+
+# =========================
+
+secrets.json
+*.pem
+*.key
+*.crt
+
+# =========================
+
+# Super-Linter (optional)
+
+# =========================
+
+.super-linter/
