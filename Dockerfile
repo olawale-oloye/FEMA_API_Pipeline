@@ -1,19 +1,31 @@
+# ---------- Builder ----------
+FROM python:3.11.9-slim AS builder
+
+WORKDIR /build
+
+# Only copy requirements
+COPY requirements.txt .
+
+# Install deps into a virtual env
+RUN python -m venv /opt/venv \
+    && /opt/venv/bin/pip install --no-cache-dir -r requirements.txt
+
+# ---------- Runtime ----------
 FROM python:3.11.9-slim
 
 WORKDIR /app
 
-# Install dependencies first
-COPY requirements.txt .
+# Copy virtualenv from builder
+COPY --from=builder /opt/venv /opt/venv
 
-RUN python -m pip install --no-cache-dir -r requirements.txt
+# Activate venv
+ENV PATH="/opt/venv/bin:$PATH"
 
-# Copy app
+# Copy app code
 COPY . .
 
-# Create non-root user
-RUN useradd -m appuser \
-    && chown -R appuser:appuser /app
-
+# Non-root user
+RUN useradd -m appuser && chown -R appuser:appuser /app
 USER appuser
 
 CMD ["python", "app.py"]
