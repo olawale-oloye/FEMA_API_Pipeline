@@ -1,27 +1,20 @@
-# Base image
-FROM python:3.11-slim
+FROM python:3.11.9-slim
 
-# Set working directory
 WORKDIR /app
 
-# Copy ONLY requirements first (for caching)
+# Install dependencies first
 COPY requirements.txt .
 
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt
 
-# Install dependencies
-RUN python -m pip install --no-cache-dir --upgrade pip \
-&&  python -m pip install --no-cache-dir -r requirements.txt
-
-
-# Copy files
+# Copy app
 COPY . .
 
 # Create non-root user
-RUN useradd -m appuser
+RUN useradd -m appuser \
+    && chown -R appuser:appuser /app
+
 USER appuser
 
-# Environment
-# ENV PYTHONUNBUFFERED=1
-
-# Run app
 CMD ["python", "app.py"]
