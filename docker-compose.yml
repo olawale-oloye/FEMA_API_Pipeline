@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:17
+    container_name: fema_db
+    restart: always
+    environment:
+      POSTGRES_DB: ${PG_DB}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PG_USER}"]
+      interval: 5s
+      retries: 5
+      timeout: 3s
+
+  app:
+    build: .
+    container_name: fema_etl
+    depends_on:
+      db:
+        condition: service_healthy   # ✅ waits for DB
+    env_file:
+      - .env
+    command: python app.py
+    restart: on-failure
+
+volumes:
+  postgres_data:
