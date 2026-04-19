@@ -16,6 +16,9 @@ RUN python -m pip install --upgrade pip \
 # Copy files
 COPY . .
 
+# Create non-root user
+RUN useradd -m appuser
+USER appuser
 
 # Environment
 ENV PYTHONUNBUFFERED=1
