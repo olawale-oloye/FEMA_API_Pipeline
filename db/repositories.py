@@ -35,6 +35,8 @@ def create_table_if_not_exists(schema: str = "bronze") -> None:
     """
     conn = get_connection()
     cursor = conn.cursor()
+    create_schema_if_not_exists(schema)
+
     if schema not in {"bronze", "silver", "gold"}:
         raise ValueError("Invalid schema")
 
@@ -72,7 +74,7 @@ def insert_projects(projects: list[dict[str, Any]], schema: str = "bronze") -> N
     conn = get_connection()
     cursor = conn.cursor()
 
-    query = """
+    query = f"""
         INSERT INTO {schema}.fema_projects (
             disaster_number, state, county, incident_type,
             declaration_date, applicant_name, project_number,
