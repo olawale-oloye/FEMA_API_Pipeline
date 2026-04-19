@@ -18,8 +18,12 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = BASE_DIR.parent
 
-ENV_PATH = PROJECT_ROOT / "env" / ".env"
-load_dotenv(dotenv_path=ENV_PATH)
+ENV_PATH = PROJECT_ROOT / ".env"
+# Load .env
+if ENV_PATH.exists():
+    load_dotenv(dotenv_path=ENV_PATH)
+else:
+    load_dotenv()
 
 # -----------------------------
 # API Configuration
