@@ -40,7 +40,8 @@ def create_table_if_not_exists(schema: str = "bronze") -> None:
     if schema not in {"bronze", "silver", "gold"}:
         raise ValueError("Invalid schema")
 
-    cursor.execute(f"""
+    cursor.execute(
+        f"""
         CREATE TABLE IF NOT EXISTS {schema}.fema_projects (
             id SERIAL PRIMARY KEY,
             disaster_number INTEGER,
@@ -54,7 +55,8 @@ def create_table_if_not_exists(schema: str = "bronze") -> None:
             federal_share NUMERIC,
             total_obligated NUMERIC
         );
-    """)
+    """
+    )
 
     conn.commit()
     cursor.close()

@@ -14,28 +14,58 @@
 # pre-commit install
 # pre-commit run --all-files
 
+# # Local
+# fail_fast: true
+
+# repos:
+
+# - repo: local
+#   hooks:
+
+#   - id: ruff
+#     name: ruff
+#     entry: python -m ruff check . --fix
+#     language: system
+#     types: [python]
+
+#   - id: ruff-format
+#     name: ruff-format
+#     entry: python -m ruff format .
+#     language: system
+#     types: [python]
+
+#   - id: mypy
+#     name: mypy
+#     entry: python -m mypy
+#     language: system
+#     types: [python]
 
 fail_fast: true
 
 repos:
+  # Ruff (lint + quick fixes)
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
+    hooks:
+      - id: ruff
+        args: ["--fix"]
 
-- repo: local
-  hooks:
+      - id: ruff-format
 
-  - id: ruff
-    name: ruff
-    entry: python -m ruff check . --fix
-    language: system
-    types: [python]
+  # Black (formatting)
+  - repo: https://github.com/psf/black
+    rev: 24.3.0
+    hooks:
+      - id: black
 
-  - id: ruff-format
-    name: ruff-format
-    entry: python -m ruff format .
-    language: system
-    types: [python]
+  # isort (import sorting)
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
 
-  - id: mypy
-    name: mypy
-    entry: python -m mypy
-    language: system
-    types: [python]
+  # mypy (type checking)
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.11.2
+    hooks:
+      - id: mypy
