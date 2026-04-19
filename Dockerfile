@@ -9,7 +9,7 @@ COPY requirements.txt .
 
 
 # Install dependencies
-RUN python -m pip install --upgrade pip \
+RUN python -m pip install --no-cache-dir --upgrade pip \
 &&  python -m pip install --no-cache-dir -r requirements.txt
 
 
@@ -21,7 +21,7 @@ RUN useradd -m appuser
 USER appuser
 
 # Environment
-ENV PYTHONUNBUFFERED=1
+# ENV PYTHONUNBUFFERED=1
 
 # Run app
 CMD ["python", "app.py"]
