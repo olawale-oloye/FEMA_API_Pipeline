@@ -1,4 +1,4 @@
-version: "3.9"
+name: fema_pipeline
 
 services:
   db:
@@ -19,12 +19,39 @@ services:
       retries: 5
       timeout: 3s
 
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   container_name: pgadmin
+  #   restart: always
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+  #     PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+  #   ports:
+  #     - "5050:80"
+  #   depends_on:
+  #     - db
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    ports:
+      - "5050:80"
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json
+    depends_on:
+      - db
+
   app:
     build: .
+    image: fema_api_image:v1.0
     container_name: fema_etl
     depends_on:
       db:
-        condition: service_healthy   # ✅ waits for DB
+        condition: service_healthy
     env_file:
       - .env
     command: python app.py

@@ -4,16 +4,22 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+  statuses: write
+
 jobs:
   super-lint:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Run Super-Linter
-        uses: github/super-linter@v6
+      - uses: github/super-linter@v6
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          VALIDATE_NATURAL_LANGUAGE: true
+          VALIDATE_MARKDOWN: true
+          VALIDATE_CHECKOV: true
