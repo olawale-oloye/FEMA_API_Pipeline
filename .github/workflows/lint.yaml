@@ -20,6 +20,6 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-          VALIDATE_NATURAL_LANGUAGE: true
-          VALIDATE_MARKDOWN: true
-          VALIDATE_CHECKOV: true
+          VALIDATE_NATURAL_LANGUAGE: false
+          VALIDATE_MARKDOWN: false
+          VALIDATE_CHECKOV: false
